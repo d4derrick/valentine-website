@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Will You Be My Valentine? ❤️</title>
+  <title>Will You Be My Valentine Laura? ❤️</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Comic Sans MS', cursive;
       text-align: center;
       background: linear-gradient(135deg, #ff6b81, #ffcccc);
       color: white;
@@ -18,17 +19,12 @@
       50% { background: #ff85a1; }
       100% { background: #ffcccc; }
     }
-    .question-box {
+    .question-box, .love-letter {
       background: rgba(255, 255, 255, 0.2);
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       margin-top: 30px;
-      animation: fadeIn 2s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
     }
     button {
       background-color: #ff3b6f;
@@ -45,83 +41,78 @@
       background-color: #ff2a5b;
       transform: scale(1.1);
     }
-    .heart {
-      font-size: 50px;
-      animation: heartbeat 1.5s infinite;
-    }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.3); }
-    }
     .hidden {
       display: none;
     }
+    .love-letter {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #fff;
+    }
   </style>
+  <script>
+    (function() {
+      emailjs.init("Zd-CcEEGF57Ymn-C_"); // Replace with your EmailJS public key
+    })();
+
+    function sendResponse(answer) {
+      const templateParams = {
+        to_name: "Derrick",
+        message: `She answered: ${answer}`,
+      };
+
+      emailjs.send("service_xj8hmxn", "template_qw1vs5m", templateParams)
+        .then(function(response) {
+          console.log("SUCCESS!", response.status, response.text);
+          alert("Response sent to your email! 📧");
+        }, function(error) {
+          console.log("FAILED...", error);
+          alert("Oops! Something went wrong.");
+        });
+    }
+
+    function yesAnswer() {
+      sendResponse("Yes");
+      document.getElementById('question-box').innerHTML = `
+        <h2>I love you soooo much, Pookie! Thank you! 😘❤️</h2>
+        <p>Your response has been sent to derrick! 📨</p>
+        <button onclick="showLoveLetter()">Show Love Letter 💌</button>
+      `;
+    }
+
+    function noAnswer() {
+      sendResponse("No");
+      document.getElementById('question-box').innerHTML = `
+        <p>Are you sure? 😢 Please don’t break my heart... 💔</p>
+        <button onclick="yesAnswer()">Okay, fine! 😍</button>
+      `;
+    }
+
+    function showLoveLetter() {
+      document.getElementById('love-letter').classList.remove('hidden');
+      document.getElementById('question-box').innerHTML = '';
+    }
+  </script>
 </head>
 <body>
 
   <h1>Will You Be My Valentine? ❤️</h1>
-  <p class="heart">💖💘💝💞</p>
-  <div class="question-box" id="question-box">
+  <div id="question-box" class="question-box">
     <p>Will you be my valentine? 🥺💕</p>
     <button onclick="yesAnswer()">Yes</button>
     <button onclick="noAnswer()">No</button>
   </div>
 
-  <audio id="background-music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-  </audio>
-
-  <div id="surprise-message" class="hidden">
-    <h2>🎆 Surprise! 🎆</h2>
-    <p>Thank you for saying yes! 😍 You’re the most amazing person in my life, and I’m so lucky to have you! 💕🌹</p>
-    <p>Happy Valentine’s Day, my love! ❤️❤️❤️</p>
-    <p class="heart">💞💞💞💞💞💞</p>
+  <div id="love-letter" class="hidden love-letter">
+    <h2>💌 My Love Letter to You 💌</h2>
+    <p>Hey Pookie,</p>
+    <p>
+      I just want to tell you how much you mean to me. You light up my world with your smile and make every day brighter just by being you.  
+      I’m so grateful for every moment we share together, and I can’t imagine my life without you in it.  
+      You are my sunshine, my best friend, and the love of my life. Thank you for being you—kind, funny, and absolutely perfect.  
+    </p>
+    <p>Forever yours, 💖<br>derrick 😘</p>
   </div>
-
-  <script>
-    window.onload = function() {
-      document.getElementById('background-music').play();
-    }
-
-    function yesAnswer() {
-      document.getElementById('question-box').innerHTML = `
-        <h2>I love you soooo much, Pookie! Thank you! 😘❤️💖</h2>
-        <p>You’ve made my day the happiest ever! 🥰</p>
-        <p class="heart">💞💞💞</p>
-        <button onclick="showSurprise()">See a special surprise! 🎉</button>
-      `;
-    }
-
-    function noAnswer() {
-      document.getElementById('question-box').innerHTML = `
-        <p>Are you sure? 😢 Please don’t break my heart... 💔</p>
-        <button onclick="secondYes()">Yes</button>
-        <button onclick="secondNo()">No</button>
-      `;
-    }
-
-    function secondYes() {
-      document.getElementById('question-box').innerHTML = `
-        <h2>I love you soooo much, Pookie! Thank you! 😘❤️💖</h2>
-        <p>Yay! I knew you’d come around! 🎉✨</p>
-        <button onclick="showSurprise()">See a special surprise! 🎉</button>
-      `;
-    }
-
-    function secondNo() {
-      document.getElementById('question-box').innerHTML = `
-        <p>Please reconsider! 🥺 Pretty please with a cherry on top! 🍒✨</p>
-        <p>Here’s a puzzle: What’s red, cute, and loves you forever? ❤️ Answer: Me! 😍</p>
-        <button onclick="yesAnswer()">Okay, fine! 😍</button>
-      `;
-    }
-
-    function showSurprise() {
-      document.getElementById('surprise-message').classList.remove('hidden');
-      document.getElementById('question-box').innerHTML = '';
-    }
-  </script>
 
 </body>
 </html>
